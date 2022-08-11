@@ -68,8 +68,13 @@ int main(int argc, char* argv[])
 		// Lex the file code
 		lexer lex(code);
 		
+		// Get the lexer tokens.
 		const auto& lexer_tokens = lex.get_tokens();
+
+		// Turn the tokens into the vm's bytecode.
 		const auto& byte_code = gen::generate_code(lexer_tokens);
+
+		// Run the virtual machine with the byte code.
 		vm virtual_machine(byte_code);
 	}
 	

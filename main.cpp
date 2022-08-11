@@ -18,24 +18,30 @@ int main(int argc, char* argv[])
 	//vm virtual_machine(vm_code);
 	//
 	//virtual_machine.~vm();
-
+	//return std::getchar();
 
 	std::string code;
-
+	
 	if (argc == 1) // Text passing mode
 	{
 		std::printf("[VM]\nWrite code to interpret...\n");
+	
+		//vm virtual_machine({ NOP });
 
 		while (true)
 		{
 			std::cin >> code;
-
+	
 			if (code == "exit")
 				return EXIT_SUCCESS;
-
+	
 			if (!code.empty())
 			{
 				lexer lex(code);
+
+				const auto& lexer_tokens = lex.get_tokens();
+				const auto& byte_code = gen::generate_code(lexer_tokens);
+
 				code.clear();
 			}
 		}
@@ -45,7 +51,7 @@ int main(int argc, char* argv[])
 		// Open file
 		const char* file_name = argv[1];
 		std::ifstream file_stream(file_name);
-
+	
 		// Ensure file exists
 		if (!file_stream)
 		{
@@ -53,18 +59,19 @@ int main(int argc, char* argv[])
 			std::printf("[info] Usage:\n	1) virtual-machine.exe <script_name.txt>\n	2) virtual-machine.exe");
 			return EXIT_FAILURE;
 		}
-
+	
 		// Convert file stream to string
 		std::stringstream file_stream_str;
 		file_stream_str << file_stream.rdbuf();
 		code = file_stream_str.str();
-
+	
 		// Lex the file code
 		lexer lex(code);
 		
 		const auto& lexer_tokens = lex.get_tokens();
 		const auto& byte_code = gen::generate_code(lexer_tokens);
+		vm virtual_machine(byte_code);
 	}
-
+	
 	return EXIT_SUCCESS;
 }

@@ -1,20 +1,20 @@
 #include "vm.h"
 #include "vm_defs.h"
 
-void vm::setup_registers(const byte code[])
+void vm::setup_registers()
 {
 	registers.vip = const_cast<byte*>(&code[0]);
 	registers.vsp = reinterpret_cast<std::uintptr_t*>(&stack[0]);
 }
 
-void vm::run(const byte code[], const std::size_t& code_size)
+void vm::run()
 {
 	// Basic sanity checks
-	if (!code || code_size <= 0)
+	if (code.empty())
 		return;
 
 	// Loop through all byte code
-	for (auto i = 0; i < code_size; i++)
+	for (auto i = 0; i < code.size(); i++)
 	{
 		const byte current_opcode = *registers.vip;
 
@@ -63,7 +63,7 @@ void vm::handle_add()
 	{
 		case register_operands::VAX_OPERAND:
 			registers.vax += value_operand;
-			std::printf("0x%x  vax -> %i\n", &registers.vax, registers.vax);
+			std::printf("0x%p | vax = %i\n", &registers.vax, registers.vax);
 			break;
 		default:
 			break;
@@ -86,7 +86,7 @@ void vm::handle_sub()
 	{
 		case register_operands::VAX_OPERAND:
 			registers.vax -= value_operand;
-			std::printf("0x%x  vax -> %i\n", &registers.vax, registers.vax);
+			std::printf("0x%p | vax = %i\n", &registers.vax, registers.vax);
 			break;
 		default:
 			break;

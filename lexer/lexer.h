@@ -12,6 +12,7 @@ public:
 	{
 		// Opcodes
 		ADD_OP,
+		SUB_OP,
 		// Registers
 		VAX_REG,
 		// Other
@@ -26,7 +27,8 @@ public:
 private:
 	const std::unordered_map<std::string, token_type> operator_tokens =
 	{
-		{ "add", token_type::ADD_OP }
+		{ "add", token_type::ADD_OP },
+		{ "sub", token_type::SUB_OP }
 	};
 
 	const std::unordered_map<std::string, token_type> register_tokens =
@@ -59,23 +61,23 @@ public:
 			current_index++;
 		}
 
-		for (const auto token : token_list)
-		{
-			switch (token.type)
-			{
-				case ADD_OP:
-					std::printf("[operator] add\n");
-					break;
-				case VAX_REG:
-					std::printf("[register] vax\n");
-					break;
-				case NUMERIC:
-					std::printf("[numeric] %i\n", token.numeric_value);
-					break;
-				default:
-					continue;
-			}
-		}
+		//for (const auto token : token_list)
+		//{
+		//	switch (token.type)
+		//	{
+		//		case ADD_OP:
+		//			std::printf("[operator] add\n");
+		//			break;
+		//		case VAX_REG:
+		//			std::printf("[register] vax\n");
+		//			break;
+		//		case NUMERIC:
+		//			std::printf("[numeric] %i\n", token.numeric_value);
+		//			break;
+		//		default:
+		//			continue;
+		//	}
+		//}
 	}
 
 	std::vector<token>& get_tokens();

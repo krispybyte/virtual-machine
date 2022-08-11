@@ -13,5 +13,5 @@ enum opcodes : std::int8_t
 
 enum register_operands : std::int8_t
 {
-	VAX_OPERAND
+	VAX_OPERAND = 6
 };

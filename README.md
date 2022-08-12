@@ -8,6 +8,7 @@ Code could most likely be improved in some places, meaning pull requests are wel
 * Several registers
 * Large numeric value support
 * Debug mode (more specified in the flags section)
+* Interpreter supports running in both x64 and x86
 
 ### :bulb: Todo
 * Add floating point value support

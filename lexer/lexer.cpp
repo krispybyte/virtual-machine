@@ -1,6 +1,6 @@
 #include "lexer.h"
 
-void lexer::push_token(const token_type type, const int numeric_value)
+void lexer::push_token(const token_type type, const sliced_number numeric_value)
 {
 	token_list.push_back({ type, numeric_value });
 }
@@ -104,7 +104,13 @@ void lexer::scan_numerics()
 	const std::string numeric_value_str = code.substr(start_index, end_index);
 
 	// Convert the numeric in the string into an integer and clamp it 0-255.
-	const byte numeric_value = static_cast<byte>(std::stoi(numeric_value_str));
+	//const byte numeric_value = static_cast<byte>(std::stoi(numeric_value_str));
+	sliced_number numeric_value;
+#ifdef _WIN64
+	numeric_value.number = std::stoull(numeric_value_str);
+#else
+	numeric_value.number = std::stoi(numeric_value_str);
+#endif
 
 	// Push the numeric value into the token list.
 	push_token(token_type::NUMERIC, numeric_value);

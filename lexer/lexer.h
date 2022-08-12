@@ -23,10 +23,30 @@ public:
 		NUMERIC
 	};
 
+	static union sliced_number
+	{
+		struct
+		{
+			std::uint8_t first_quarter : 8;
+			std::uint8_t second_quarter : 8;
+			std::uint8_t third_quarter : 8;
+			std::uint8_t fourth_quarter : 8;
+#ifdef _WIN64
+			std::uint8_t fith_quarter : 8;
+			std::uint8_t sixth_quarter : 8;
+			std::uint8_t seventh_quarter : 8;
+			std::uint8_t eighth_quarter : 8;
+#endif
+		};
+
+		// Using uintptr_t due to it's size 32/64 bits depending on the architecture.
+		std::uintptr_t number;
+	};
+
 	static struct token
 	{
 		token_type type;
-		int numeric_value;
+		sliced_number numeric_value;
 	};
 private:
 	const std::unordered_map<std::string, token_type> operator_tokens =
@@ -50,7 +70,7 @@ private:
 	std::vector<token> token_list;
 
 	// Push the token into the token list.
-	inline void push_token(const token_type type, const int numeric_value = 0);
+	inline void push_token(const token_type type, const sliced_number numeric_value = { 0 });
 	// Scans for all types of tokens.
 	void scan_tokens();
 	// Scans for operators and registers.

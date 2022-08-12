@@ -8,7 +8,7 @@ class vm
 	struct virtual_registers
 	{
 		byte* vip;				// Instruction pointer, holds value of the current instruction
-		byte* vsp;	// Stack pointer, points to a stack value
+		std::uintptr_t* vsp;	// Stack pointer, points to a stack value
 
 		std::uintptr_t vax;		// General purpose register
 		std::uintptr_t vbx;		// General purpose register
@@ -21,6 +21,7 @@ class vm
 	void setup_registers();
 	void run();
 	std::vector<byte> get_operands(const std::size_t& count);
+	std::uintptr_t get_number_operand(const std::int8_t offset);
 	void handle_add();
 	void handle_sub();
 	void handle_mov();

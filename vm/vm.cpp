@@ -1,10 +1,11 @@
 #include "vm.h"
 #include "vm_defs.h"
+#include "../lexer/lexer.h"
 
 void vm::setup_registers()
 {
 	registers.vip = &code[0];
-	registers.vsp = &stack[0];
+	registers.vsp = reinterpret_cast<std::uintptr_t*>(&stack[0]);
 	registers.vax = 0x00000000;
 	registers.vbx = 0x00000000;
 }
@@ -59,11 +60,28 @@ std::vector<byte> vm::get_operands(const std::size_t& count)
 	return result;
 }
 
+std::uintptr_t vm::get_number_operand(const std::int8_t offset)
+{
+	lexer::sliced_number sliced_number;
+
+	sliced_number.first_quarter = *(registers.vip + offset + 1);
+	sliced_number.second_quarter = *(registers.vip + offset + 2);
+	sliced_number.third_quarter = *(registers.vip + offset + 3);
+	sliced_number.fourth_quarter = *(registers.vip + offset + 4);
+#ifdef _WIN64
+	sliced_number.fith_quarter = *(registers.vip + offset + 5);
+	sliced_number.sixth_quarter = *(registers.vip + offset + 6);
+	sliced_number.seventh_quarter = *(registers.vip + offset + 7);
+	sliced_number.eighth_quarter = *(registers.vip + offset + 8);
+#endif
+
+	return sliced_number.number;
+}
+
 void vm::handle_add()
 {
-	const auto operands = get_operands(2);
-	const byte register_operand = operands.at(0);
-	const byte value_operand = operands.at(1);
+	const byte register_operand = get_operands(1).at(0);
+	const std::uintptr_t value_operand = get_number_operand(1);
 
 	// Find out what register to perform the add instruction
 	// onto using the first operand, and use the second operand
@@ -82,15 +100,14 @@ void vm::handle_add()
 			break;
 	}
 
-	// Increment the instruction pointer by the size of the two following operands.
-	registers.vip += 2;
+	// Increment the instruction pointer by the size of both operands.
+	registers.vip += sizeof(register_operand) + sizeof(value_operand);
 }
 
 void vm::handle_sub()
 {
-	const auto operands = get_operands(2);
-	const byte register_operand = operands.at(0);
-	const byte value_operand = operands.at(1);
+	const byte register_operand = get_operands(1).at(0);
+	const std::uintptr_t value_operand = get_number_operand(1);
 
 	// Find out what register to perform the sub instruction
 	// onto using the first operand, and use the second operand
@@ -99,25 +116,24 @@ void vm::handle_sub()
 	{
 		case register_operands::VAX_OPERAND:
 			registers.vax -= value_operand;
-			std::printf("0x%p | vax = %i\n", &registers.vax, registers.vax);
+			std::printf("0x%p | vax = %d\n", &registers.vax, registers.vax);
 			break;
 		case register_operands::VBX_OPERAND:
 			registers.vbx -= value_operand;
-			std::printf("0x%p | vbx = %i\n", &registers.vbx, registers.vbx);
+			std::printf("0x%p | vbx = %d\n", &registers.vbx, registers.vbx);
 			break;
 		default:
 			break;
 	}
 
-	// Increment the instruction pointer by the size of the two following operands.
-	registers.vip += 2;
+	// Increment the instruction pointer by the size of both operands.
+	registers.vip += sizeof(register_operand) + sizeof(value_operand);
 }
 
 void vm::handle_mov()
 {
-	const auto operands = get_operands(2);
-	const byte register_operand = operands.at(0);
-	const byte value_operand = operands.at(1);
+	const byte register_operand = get_operands(1).at(0);
+	const std::uintptr_t value_operand = get_number_operand(1);
 
 	// Find out what register to perform the sub instruction
 	// onto using the first operand, and use the second operand
@@ -126,23 +142,23 @@ void vm::handle_mov()
 	{
 		case register_operands::VAX_OPERAND:
 			registers.vax = value_operand;
-			std::printf("0x%p | vax = %i\n", &registers.vax, registers.vax);
+			std::printf("0x%p | vax = %d\n", &registers.vax, registers.vax);
 			break;
 		case register_operands::VBX_OPERAND:
 			registers.vbx = value_operand;
-			std::printf("0x%p | vbx = %i\n", &registers.vbx, registers.vbx);
+			std::printf("0x%p | vbx = %d\n", &registers.vbx, registers.vbx);
 			break;
 		default:
 			break;
 	}
 
-	// Increment the instruction pointer by the size of the two following operands.
-	registers.vip += 2;
+	// Increment the instruction pointer by the size of both operands.
+	registers.vip += sizeof(register_operand) + sizeof(value_operand);
 }
 
 void vm::handle_push()
 {
-	const byte value_operand = get_operands(1).at(0);
+	const std::uintptr_t value_operand = get_number_operand(0);
 
 	// Increment the stack pointt before pushing the data.
 	registers.vsp++;
@@ -176,6 +192,6 @@ void vm::handle_pop()
 	// Decrement the stack pointer after popping off the data.
 	registers.vsp--;
 
-	// Increment the instruction pointer by the size of the operand (1 byte).
-	registers.vip++;
+	// Increment the instruction pointer by the size of it's operand.
+	registers.vip += sizeof(register_operand);
 }

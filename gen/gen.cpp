@@ -33,7 +33,16 @@ std::vector<byte> gen::generate_code(const std::vector<lexer::token>& token_list
 				result_bytes.push_back(register_operands::VBX_OPERAND);
 				continue;
 			case lexer::token_type::NUMERIC:
-				result_bytes.push_back(token.numeric_value);
+				result_bytes.push_back(token.numeric_value.first_quarter);
+				result_bytes.push_back(token.numeric_value.second_quarter);
+				result_bytes.push_back(token.numeric_value.third_quarter);
+				result_bytes.push_back(token.numeric_value.fourth_quarter);
+#ifdef _WIN64
+				result_bytes.push_back(token.numeric_value.fith_quarter);
+				result_bytes.push_back(token.numeric_value.sixth_quarter);
+				result_bytes.push_back(token.numeric_value.seventh_quarter);
+				result_bytes.push_back(token.numeric_value.eighth_quarter);
+#endif
 				continue;
 			default:
 				continue;

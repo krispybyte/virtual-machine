@@ -7,8 +7,8 @@ namespace options
 	{
 		struct
 		{
-			bool build_mode: 1;
-			bool debug_mode: 1;
+			bool build_mode : 1;
+			bool debug_mode : 1;
 		};
 
 		std::uint32_t options;

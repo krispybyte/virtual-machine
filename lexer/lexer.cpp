@@ -104,7 +104,6 @@ void lexer::scan_numerics()
 	const std::string numeric_value_str = code.substr(start_index, end_index);
 
 	// Convert the numeric in the string into an integer and clamp it 0-255.
-	//const byte numeric_value = static_cast<byte>(std::stoi(numeric_value_str));
 	sliced_number numeric_value;
 #ifdef _WIN64
 	numeric_value.number = std::stoull(numeric_value_str);

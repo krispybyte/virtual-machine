@@ -12,11 +12,11 @@ void vm::setup_registers()
 
 void vm::run()
 {
-	// Basic sanity checks
+	// Basic sanity checks.
 	if (code.empty())
 		return;
 
-	// Loop through all byte code
+	// Loop through all byte code.
 	for (auto i = 0; i < code.size(); i++)
 	{
 		const byte current_opcode = *registers.vip;

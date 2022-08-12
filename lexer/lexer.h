@@ -10,16 +10,16 @@ class lexer
 public:
 	static enum token_type : std::int16_t
 	{
-		// Opcodes
+		// Opcode tokens.
 		ADD_OP,
 		SUB_OP,
 		MOV_OP,
 		PUSH_OP,
 		POP_OP,
-		// Registers
+		// Register tokens.
 		VAX_REG,
 		VBX_REG,
-		// Other
+		// Other tokens.
 		NUMERIC
 	};
 

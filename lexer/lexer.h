@@ -14,6 +14,8 @@ public:
 		ADD_OP,
 		SUB_OP,
 		MOV_OP,
+		PUSH_OP,
+		POP_OP,
 		// Registers
 		VAX_REG,
 		VBX_REG,
@@ -31,7 +33,9 @@ private:
 	{
 		{ "add", token_type::ADD_OP },
 		{ "sub", token_type::SUB_OP },
-		{ "mov", token_type::MOV_OP }
+		{ "mov", token_type::MOV_OP },
+		{ "push", token_type::PUSH_OP },
+		{ "pop", token_type::POP_OP }
 	};
 
 	const std::unordered_map<std::string, token_type> register_tokens =
@@ -75,6 +79,12 @@ public:
 					break;
 				case MOV_OP:
 					std::printf("[operator] mov\n");
+					break;
+				case PUSH_OP:
+					std::printf("[operator] push\n");
+					break;
+				case POP_OP:
+					std::printf("[operator] pop\n");
 					break;
 				case VAX_REG:
 					std::printf("[register] vax\n");

@@ -3,9 +3,10 @@
 
 void vm::setup_registers()
 {
-	registers.vip = const_cast<byte*>(&code[0]);
-	registers.vsp = reinterpret_cast<std::uintptr_t*>(&stack[0]);
+	registers.vip = &code[0];
+	registers.vsp = &stack[0];
 	registers.vax = 0x00000000;
+	registers.vbx = 0x00000000;
 }
 
 void vm::run()
@@ -29,6 +30,12 @@ void vm::run()
 				break;
 			case opcodes::MOV:
 				handle_mov();
+				break;
+			case opcodes::PUSH:
+				handle_push();
+				break;
+			case opcodes::POP:
+				handle_pop();
 				break;
 			default:
 				break;
@@ -131,4 +138,44 @@ void vm::handle_mov()
 
 	// Increment the instruction pointer by the size of the two following operands.
 	registers.vip += 2;
+}
+
+void vm::handle_push()
+{
+	const byte value_operand = get_operands(1).at(0);
+
+	// Increment the stack pointt before pushing the data.
+	registers.vsp++;
+
+	// Save the data in the byte the current stack pointer is holding.
+	memcpy(registers.vsp, &value_operand, sizeof(value_operand));
+
+	// Increment the instruction pointer by the size of the pushed data.
+	registers.vip += sizeof(value_operand);
+}
+
+void vm::handle_pop()
+{
+	const byte register_operand = get_operands(1).at(0);
+
+	// Find the register to pop the data onto using the instruction operand.
+	switch (register_operand)
+	{
+		case register_operands::VAX_OPERAND:
+			registers.vax = *registers.vsp;
+			std::printf("0x%p | popped %i onto vax\n", &registers.vax, registers.vax);
+			break;
+		case register_operands::VBX_OPERAND:
+			registers.vbx = *registers.vsp;
+			std::printf("0x%p | popped %i onto vbx\n", &registers.vbx, registers.vbx);
+			break;
+		default:
+			break;
+	}
+
+	// Decrement the stack pointer after popping off the data.
+	registers.vsp--;
+
+	// Increment the instruction pointer by the size of the operand (1 byte).
+	registers.vip++;
 }

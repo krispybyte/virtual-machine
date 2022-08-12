@@ -94,4 +94,4 @@ void vm::handle_sub()
 
 	// Increment the instruction pointer by the size of the two following operands.
 	registers.vip += 2;
-}
+} 

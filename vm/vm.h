@@ -23,14 +23,14 @@ class vm
 	void handle_add();
 	void handle_sub();
 public:
-	vm(const std::vector<byte>& vm_code, const std::size_t& stack_size = 1000000)
-		: code(vm_code)
+	vm(const std::vector<byte>& code, const std::size_t& stack_size = 1000000)
+		: code(code)
 	{
 		// Allocate the vm's stack
 		stack = new byte[stack_size];
 		std::printf("0x%p | Allocated %i byte stack for the vm...\n", stack, stack_size);
 
-		// Setup vm registers and run the byte code
+		// Setup vm registers and run it
 		setup_registers();
 		run();
 	}

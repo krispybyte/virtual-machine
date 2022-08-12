@@ -29,4 +29,4 @@ std::vector<byte> gen::generate_code(const std::vector<lexer::token>& token_list
 	}
 
 	return result_bytes;
-}
+} 

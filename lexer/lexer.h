@@ -49,8 +49,6 @@ private:
 	void scan_ops_and_regs();
 	// Scans for numeric values.
 	void scan_numerics();
-	// Scans for comments and removes them from the code.
-	void scan_comments();
 public:
 	lexer(const std::string& text) 
 		: code(text)
@@ -61,24 +59,27 @@ public:
 			current_index++;
 		}
 
-		//for (const auto token : token_list)
-		//{
-		//	switch (token.type)
-		//	{
-		//		case ADD_OP:
-		//			std::printf("[operator] add\n");
-		//			break;
-		//		case VAX_REG:
-		//			std::printf("[register] vax\n");
-		//			break;
-		//		case NUMERIC:
-		//			std::printf("[numeric] %i\n", token.numeric_value);
-		//			break;
-		//		default:
-		//			continue;
-		//	}
-		//}
+		for (const auto token : token_list)
+		{
+			switch (token.type)
+			{
+				case ADD_OP:
+					std::printf("[operator] add\n");
+					break;
+				case SUB_OP:
+					std::printf("[operator] sub\n");
+					break;
+				case VAX_REG:
+					std::printf("[register] vax\n");
+					break;
+				case NUMERIC:
+					std::printf("[numvalue] %i\n", token.numeric_value);
+					break;
+				default:
+					continue;
+			}
+		}
 	}
 
 	std::vector<token>& get_tokens();
-};
+}; 

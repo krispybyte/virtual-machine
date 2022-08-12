@@ -27,15 +27,15 @@ public:
 	{
 		struct
 		{
-			std::uint8_t first_quarter : 8;
-			std::uint8_t second_quarter : 8;
-			std::uint8_t third_quarter : 8;
-			std::uint8_t fourth_quarter : 8;
+			std::uint8_t first_quarter : 8;		// 0-8
+			std::uint8_t second_quarter : 8;	// 8-16
+			std::uint8_t third_quarter : 8;		// 16-24
+			std::uint8_t fourth_quarter : 8;	// 24-32
 #ifdef _WIN64
-			std::uint8_t fith_quarter : 8;
-			std::uint8_t sixth_quarter : 8;
-			std::uint8_t seventh_quarter : 8;
-			std::uint8_t eighth_quarter : 8;
+			std::uint8_t fith_quarter : 8;		// 32-40
+			std::uint8_t sixth_quarter : 8;		// 40-48
+			std::uint8_t seventh_quarter : 8;	// 48-56
+			std::uint8_t eighth_quarter : 8;	// 56-64
 #endif
 		};
 

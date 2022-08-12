@@ -19,11 +19,27 @@ int main(int argc, char* argv[])
 
 		// TODO: Add a check for the file input here...
 
-		// Build
-		if (std::strcmp(current_arg, "-b") == 0)
+		if (options.next_is_output_path)
+		{
+			options::output_path = current_arg;
+			options.next_is_output_path = false;
+		}
+		else if (std::strcmp(current_arg, "-help") == 0)
+		{
+			std::printf("[usage]\n");
+			std::printf("	virtual-machine.exe <code/binary file name> <flags>\n");
+			std::printf("[flags]\n");
+			std::printf("-b	Build flag, compiles the content in your inputted file.\n");
+			std::printf("-d	Debug flag, skips code compilation and instead just converts it to bytecode then runs it through the VM.\n");
+			std::printf("-o	Out flag, lets you specify the binary's file name after the flag.");
+			return EXIT_SUCCESS;
+		}
+		else if (std::strcmp(current_arg, "-b") == 0)
 			options.build_mode = true;
 		else if (std::strcmp(current_arg, "-d") == 0)
 			options.debug_mode = true;
+		else if (std::strcmp(current_arg, "-o") == 0)
+			options.next_is_output_path = true;
 	}
 
 	// Open file.
@@ -34,7 +50,8 @@ int main(int argc, char* argv[])
 	if (!file_stream)
 	{
 		std::printf("[error] No file by the name of \"%s\" exists.\n", file_name);
-		std::printf("[info] Usage:\n	1) virtual-machine.exe <script_name.txt>\n	2) virtual-machine.exe");
+		std::printf("[info] Usage:\n	virtual-machine.exe <script_name.txt> <flags>\n");
+		std::printf("[info] Use '-help' for more information.");
 		return EXIT_FAILURE;
 	}
 	
@@ -59,7 +76,9 @@ int main(int argc, char* argv[])
 		const auto& byte_code = gen::generate_code(lexer_tokens);
 
 		// Create binary output file.
-		std::ofstream output_file("bin.txt");
+		std::ofstream output_file(!options::output_path.empty() 
+			? options::output_path 
+			: std::string(file_name) + ".bin");
 	
 		// Write all byte code into the binary file.
 		for (const byte current_byte : byte_code)

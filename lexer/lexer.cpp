@@ -35,7 +35,7 @@ void lexer::scan_ops_and_regs()
 	// No need to scan for the current char since we know it's a valid character.
 	current_index++;
 
-	// Continue scanning for all following characters
+	// Continue scanning for all following characters.
 	while (current_index < code.length())
 	{
 		// Get the currently iterated char to perform checks on.
@@ -104,11 +104,13 @@ void lexer::scan_numerics()
 	// Substr the source code by our start and end indexes.
 	const std::string numeric_value_str = code.substr(start_index, end_index);
 
-	// Convert the numeric in the string into an integer and clamp it 0-255.
+	// Convert the numeric in the string into an integer.
 	sliced_number numeric_value;
 #ifdef _WIN64
+	// 8 Bytes.
 	numeric_value.number = std::stoull(numeric_value_str);
 #else
+	// 4 Bytes.
 	numeric_value.number = std::stoi(numeric_value_str);
 #endif
 

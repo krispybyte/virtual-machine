@@ -20,7 +20,7 @@ Code could most likely be improved in some places, meaning pull requests are wel
 * **'-d'** - **Debug flag**, skips code compilation and instead just converts it to bytecode then runs it through the VM
 * **'-o'** - **Out flag**, lets you specify the binary's file name after the flag is pass
 
-### :exclamation: Usage examples
+### Usage examples
 ##### Compiling code (-o flag is optional)
 ```bash
 $ virtual-machine code.txt -b -o output.bin

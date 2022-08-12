@@ -11,6 +11,6 @@ namespace options
 			bool debug_mode: 1;
 		};
 
-		std::uint64_t options;
+		std::uintptr_t options;
 	};
 }

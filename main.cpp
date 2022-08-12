@@ -90,7 +90,7 @@ int main(int argc, char* argv[])
 	}
 
 	// Read the binary file into a byte array, and run it's byte code.
-	std::ifstream bin_file("bin.txt", std::ios_base::binary | std::ios_base::ate);
+	std::ifstream bin_file(file_name, std::ios_base::binary | std::ios_base::ate);
 
 	const std::size_t bin_size = bin_file.tellg();
 	bin_file.seekg(0);
@@ -100,6 +100,6 @@ int main(int argc, char* argv[])
 
 	// Run the virtual machine with the binary's byte code.
 	vm virtual_machine(bin_byte_code);
-	
+
 	return EXIT_SUCCESS;
 }

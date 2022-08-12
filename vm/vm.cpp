@@ -29,6 +29,12 @@ void vm::run()
 			case opcodes::SUB:
 				handle_sub();
 				break;
+			case opcodes::MUL:
+				handle_mul();
+				break;
+			case opcodes::DIV:
+				handle_div();
+				break;
 			case opcodes::MOV:
 				handle_mov();
 				break;
@@ -120,6 +126,58 @@ void vm::handle_sub()
 			break;
 		case register_operands::VBX_OPERAND:
 			registers.vbx -= value_operand;
+			std::printf("0x%p | vbx = %d\n", &registers.vbx, registers.vbx);
+			break;
+		default:
+			break;
+	}
+
+	// Increment the instruction pointer by the size of both operands.
+	registers.vip += sizeof(register_operand) + sizeof(value_operand);
+}
+
+void vm::handle_mul()
+{
+	const byte register_operand = get_operands(1).at(0);
+	const std::uintptr_t value_operand = get_number_operand(1);
+
+	// Find out what register to perform the mul instruction
+	// onto using the first operand, and use the second operand
+	// for the value to multiply it by.
+	switch (register_operand)
+	{
+		case register_operands::VAX_OPERAND:
+			registers.vax *= value_operand;
+			std::printf("0x%p | vax = %d\n", &registers.vax, registers.vax);
+			break;
+		case register_operands::VBX_OPERAND:
+			registers.vbx *= value_operand;
+			std::printf("0x%p | vbx = %d\n", &registers.vbx, registers.vbx);
+			break;
+		default:
+			break;
+	}
+
+	// Increment the instruction pointer by the size of both operands.
+	registers.vip += sizeof(register_operand) + sizeof(value_operand);
+}
+
+void vm::handle_div()
+{
+	const byte register_operand = get_operands(1).at(0);
+	const std::uintptr_t value_operand = get_number_operand(1);
+
+	// Find out what register to perform the div instruction
+	// onto using the first operand, and use the second operand
+	// for the value to divide it by.
+	switch (register_operand)
+	{
+		case register_operands::VAX_OPERAND:
+			registers.vax /= value_operand;
+			std::printf("0x%p | vax = %d\n", &registers.vax, registers.vax);
+			break;
+		case register_operands::VBX_OPERAND:
+			registers.vbx /= value_operand;
 			std::printf("0x%p | vbx = %d\n", &registers.vbx, registers.vbx);
 			break;
 		default:

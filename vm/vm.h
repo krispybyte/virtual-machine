@@ -24,6 +24,8 @@ class vm
 	std::uintptr_t get_number_operand(const std::int8_t offset);
 	void handle_add();
 	void handle_sub();
+	void handle_mul();
+	void handle_div();
 	void handle_mov();
 	void handle_push();
 	void handle_pop();

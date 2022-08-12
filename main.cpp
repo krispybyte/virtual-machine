@@ -29,9 +29,9 @@ int main(int argc, char* argv[])
 			std::printf("[usage]\n");
 			std::printf("	virtual-machine.exe <code/binary file name> <flags>\n");
 			std::printf("[flags]\n");
-			std::printf("-b	Build flag, compiles the content in your inputted file.\n");
+			std::printf("-b	Build flag, compiles the content in your inputted file and saves it to a file.\n");
 			std::printf("-d	Debug flag, skips code compilation and instead just converts it to bytecode then runs it through the VM.\n");
-			std::printf("-o	Out flag, lets you specify the binary's file name after the flag.");
+			std::printf("-o	Out flag, lets you specify the binary's file name after the flag is passed.");
 			return EXIT_SUCCESS;
 		}
 		else if (std::strcmp(current_arg, "-b") == 0)

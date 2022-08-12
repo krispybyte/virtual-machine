@@ -13,6 +13,8 @@ public:
 		// Opcode tokens.
 		ADD_OP,
 		SUB_OP,
+		MUL_OP,
+		DIV_OP,
 		MOV_OP,
 		PUSH_OP,
 		POP_OP,
@@ -53,6 +55,8 @@ private:
 	{
 		{ "add", token_type::ADD_OP },
 		{ "sub", token_type::SUB_OP },
+		{ "mul", token_type::MUL_OP },
+		{ "div", token_type::DIV_OP },
 		{ "mov", token_type::MOV_OP },
 		{ "push", token_type::PUSH_OP },
 		{ "pop", token_type::POP_OP }
@@ -87,38 +91,38 @@ public:
 			current_index++;
 		}
 
-		for (const auto token : token_list)
-		{
-			switch (token.type)
-			{
-				case ADD_OP:
-					std::printf("[operator] add\n");
-					break;
-				case SUB_OP:
-					std::printf("[operator] sub\n");
-					break;
-				case MOV_OP:
-					std::printf("[operator] mov\n");
-					break;
-				case PUSH_OP:
-					std::printf("[operator] push\n");
-					break;
-				case POP_OP:
-					std::printf("[operator] pop\n");
-					break;
-				case VAX_REG:
-					std::printf("[register] vax\n");
-					break;
-				case VBX_REG:
-					std::printf("[register] vbx\n");
-					break;
-				case NUMERIC:
-					std::printf("[numvalue] %d\n", token.numeric_value);
-					break;
-				default:
-					continue;
-			}
-		}
+		//for (const auto token : token_list)
+		//{
+		//	switch (token.type)
+		//	{
+		//		case ADD_OP:
+		//			std::printf("[operator] add\n");
+		//			break;
+		//		case SUB_OP:
+		//			std::printf("[operator] sub\n");
+		//			break;
+		//		case MOV_OP:
+		//			std::printf("[operator] mov\n");
+		//			break;
+		//		case PUSH_OP:
+		//			std::printf("[operator] push\n");
+		//			break;
+		//		case POP_OP:
+		//			std::printf("[operator] pop\n");
+		//			break;
+		//		case VAX_REG:
+		//			std::printf("[register] vax\n");
+		//			break;
+		//		case VBX_REG:
+		//			std::printf("[register] vbx\n");
+		//			break;
+		//		case NUMERIC:
+		//			std::printf("[numvalue] %d\n", token.numeric_value);
+		//			break;
+		//		default:
+		//			continue;
+		//	}
+		//}
 	}
 
 	std::vector<token>& get_tokens();

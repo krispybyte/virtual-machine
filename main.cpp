@@ -59,6 +59,8 @@ int main(int argc, char* argv[])
 		// Write all byte code into the binary file.
 		for (const byte current_byte : byte_code)
 			output_file << current_byte;
+
+		std::printf("[info] Build successful!\n");
 	
 		// Close the output file and exit.
 		output_file.close();

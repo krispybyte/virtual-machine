@@ -113,7 +113,7 @@ public:
 					std::printf("[register] vbx\n");
 					break;
 				case NUMERIC:
-					std::printf("[numvalue] %i\n", token.numeric_value);
+					std::printf("[numvalue] %d\n", token.numeric_value);
 					break;
 				default:
 					continue;

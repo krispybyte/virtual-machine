@@ -8,6 +8,7 @@ void lexer::push_token(const token_type type, const sliced_number numeric_value)
 void lexer::scan_tokens()
 {
 	const char current_char = code[current_index];
+	const char next_char = code[current_index + 1];
 
 	// Count all new lines for error details.
 	if (current_char == '\n')
@@ -21,8 +22,8 @@ void lexer::scan_tokens()
 	if (std::isalpha(current_char))
 		return scan_ops_and_regs();
 
-	// If current char is a number then we can start scanning for a numeric value.
-	if (std::isdigit(current_char))
+	// If current char is a number or a - (negative value) then we can start scanning for a numeric value.
+	if (std::isdigit(current_char) || (current_char == '-' && std::isdigit(next_char)))
 		return scan_numerics();
 }
 

@@ -20,11 +20,11 @@ Code could most likely be improved in some places, meaning pull requests are wel
 * **'-o'** - **Out flag**, lets you specify the binary's file name after the flag is pass
 
 ### :exclamation: Usage examples
-#####Compiling code (-o flag is optional)
+##### Compiling code (-o flag is optional)
 ```bash
 $ virtual-machine code.txt -b -o output.bin
 ```
-#####Running code without compilation
+##### Running code without compilation
 ```bash
 $ virtual-machine code.txt -d
 ```
@@ -43,7 +43,7 @@ push 2000
 pop vax
 pop vbx
 ```
-######Example output
+###### Example output
 ```bash
 ..
 vax = 2

@@ -17,8 +17,14 @@ std::vector<byte> gen::generate_code(const std::vector<lexer::token>& token_list
 			case lexer::token_type::SUB_OP:
 				result_bytes.push_back(opcodes::SUB);
 				continue;
+			case lexer::token_type::MOV_OP:
+				result_bytes.push_back(opcodes::MOV);
+				continue;
 			case lexer::token_type::VAX_REG:
 				result_bytes.push_back(register_operands::VAX_OPERAND);
+				continue;
+			case lexer::token_type::VBX_REG:
+				result_bytes.push_back(register_operands::VBX_OPERAND);
 				continue;
 			case lexer::token_type::NUMERIC:
 				result_bytes.push_back(token.numeric_value);

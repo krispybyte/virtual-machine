@@ -70,7 +70,7 @@ void lexer::scan_ops_and_regs()
 	// If the token doesn't exist as a key in either maps, then we know it's an invalid keyword.
 	// And so we can handle the error.
 	std::printf("[error@line%i] Invalid keyword \'%s\'. Skipping line %i.\n", new_line_count, token_name.c_str(), new_line_count);
-
+	
 	// Skip everything until the next code line or until the code ends.
 	while (code[current_index] != '\n' && current_index != code.length())
 		current_index++;

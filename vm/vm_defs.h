@@ -3,7 +3,6 @@
 
 enum opcodes : std::int8_t
 {
-	NOP,
 	ADD,
 	SUB,
 	MOV,
@@ -13,5 +12,6 @@ enum opcodes : std::int8_t
 
 enum register_operands : std::int8_t
 {
-	VAX_OPERAND = 6
+	VAX_OPERAND = 5,
+	VBX_OPERAND
 };

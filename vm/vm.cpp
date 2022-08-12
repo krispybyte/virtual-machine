@@ -5,6 +5,7 @@ void vm::setup_registers()
 {
 	registers.vip = const_cast<byte*>(&code[0]);
 	registers.vsp = reinterpret_cast<std::uintptr_t*>(&stack[0]);
+	registers.vax = 0x00000000;
 }
 
 void vm::run()
@@ -20,13 +21,14 @@ void vm::run()
 
 		switch (current_opcode)
 		{
-			case opcodes::NOP:
-				continue;
 			case opcodes::ADD:
 				handle_add();
 				break;
 			case opcodes::SUB:
 				handle_sub();
+				break;
+			case opcodes::MOV:
+				handle_mov();
 				break;
 			default:
 				break;
@@ -65,6 +67,10 @@ void vm::handle_add()
 			registers.vax += value_operand;
 			std::printf("0x%p | vax = %i\n", &registers.vax, registers.vax);
 			break;
+		case register_operands::VBX_OPERAND:
+			registers.vbx += value_operand;
+			std::printf("0x%p | vbx = %i\n", &registers.vbx, registers.vbx);
+			break;
 		default:
 			break;
 	}
@@ -88,10 +94,41 @@ void vm::handle_sub()
 			registers.vax -= value_operand;
 			std::printf("0x%p | vax = %i\n", &registers.vax, registers.vax);
 			break;
+		case register_operands::VBX_OPERAND:
+			registers.vbx -= value_operand;
+			std::printf("0x%p | vbx = %i\n", &registers.vbx, registers.vbx);
+			break;
 		default:
 			break;
 	}
 
 	// Increment the instruction pointer by the size of the two following operands.
 	registers.vip += 2;
-} 
+}
+
+void vm::handle_mov()
+{
+	const auto operands = get_operands(2);
+	const byte register_operand = operands.at(0);
+	const byte value_operand = operands.at(1);
+
+	// Find out what register to perform the sub instruction
+	// onto using the first operand, and use the second operand
+	// for the value to subtract it by.
+	switch (register_operand)
+	{
+		case register_operands::VAX_OPERAND:
+			registers.vax = value_operand;
+			std::printf("0x%p | vax = %i\n", &registers.vax, registers.vax);
+			break;
+		case register_operands::VBX_OPERAND:
+			registers.vbx = value_operand;
+			std::printf("0x%p | vbx = %i\n", &registers.vbx, registers.vbx);
+			break;
+		default:
+			break;
+	}
+
+	// Increment the instruction pointer by the size of the two following operands.
+	registers.vip += 2;
+}

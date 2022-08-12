@@ -13,8 +13,10 @@ public:
 		// Opcodes
 		ADD_OP,
 		SUB_OP,
+		MOV_OP,
 		// Registers
 		VAX_REG,
+		VBX_REG,
 		// Other
 		NUMERIC
 	};
@@ -28,12 +30,14 @@ private:
 	const std::unordered_map<std::string, token_type> operator_tokens =
 	{
 		{ "add", token_type::ADD_OP },
-		{ "sub", token_type::SUB_OP }
+		{ "sub", token_type::SUB_OP },
+		{ "mov", token_type::MOV_OP }
 	};
 
 	const std::unordered_map<std::string, token_type> register_tokens =
 	{
-		{ "vax", token_type::VAX_REG }
+		{ "vax", token_type::VAX_REG },
+		{ "vbx", token_type::VBX_REG }
 	};
 
 	std::string code;
@@ -69,8 +73,14 @@ public:
 				case SUB_OP:
 					std::printf("[operator] sub\n");
 					break;
+				case MOV_OP:
+					std::printf("[operator] mov\n");
+					break;
 				case VAX_REG:
 					std::printf("[register] vax\n");
+					break;
+				case VBX_REG:
+					std::printf("[register] vbx\n");
 					break;
 				case NUMERIC:
 					std::printf("[numvalue] %i\n", token.numeric_value);

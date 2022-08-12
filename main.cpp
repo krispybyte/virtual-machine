@@ -19,10 +19,10 @@ int main(int argc, char* argv[])
 
 		// TODO: Add a check for the file input here...
 
-		if (options.next_is_output_path)
+		if (options.next_arg_is_output_path)
 		{
 			options::output_path = current_arg;
-			options.next_is_output_path = false;
+			options.next_arg_is_output_path = false;
 		}
 		else if (std::strcmp(current_arg, "-help") == 0)
 		{
@@ -39,7 +39,7 @@ int main(int argc, char* argv[])
 		else if (std::strcmp(current_arg, "-d") == 0)
 			options.debug_mode = true;
 		else if (std::strcmp(current_arg, "-o") == 0)
-			options.next_is_output_path = true;
+			options.next_arg_is_output_path = true;
 	}
 
 	// Open file.

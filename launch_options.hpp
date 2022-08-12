@@ -7,7 +7,7 @@ namespace options
 	{
 		struct
 		{
-			bool next_is_output_path : 1;
+			bool next_arg_is_output_path : 1;
 			bool build_mode : 1;
 			bool debug_mode : 1;
 		};

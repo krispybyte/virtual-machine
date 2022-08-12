@@ -161,6 +161,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="gen\gen.h" />
+    <ClInclude Include="launch_options.hpp" />
     <ClInclude Include="lexer\lexer.h" />
     <ClInclude Include="vm\vm_defs.h" />
     <ClInclude Include="vm\vm.h" />

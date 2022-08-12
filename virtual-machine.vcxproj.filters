@@ -41,5 +41,8 @@
     <ClInclude Include="gen\gen.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="launch_options.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

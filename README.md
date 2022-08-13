@@ -34,7 +34,7 @@ $ virtual-machine code.txt -d
 ```asm
 add vax, 2
 mul vax, 4
-div vax, 3
+div vax, 2
 
 mov vax, 0
 
@@ -49,7 +49,7 @@ pop vbx
 ..
 vax = 2
 vax = 8
-vax = 2
+vax = 4
 vax = 0
 popped 2000 onto vax
 popped 9000 onto vbx

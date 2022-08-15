@@ -25,6 +25,10 @@ void lexer::scan_tokens()
 	// If current char is a number or a - (negative value) then we can start scanning for a numeric value.
 	if (std::isdigit(current_char) || (current_char == '-' && std::isdigit(next_char)))
 		return scan_numerics();
+
+	// A dollar sign represents the start of a comment.
+	if (current_char == '$')
+		return scan_comments();
 }
 
 void lexer::scan_ops_and_regs()
@@ -116,6 +120,28 @@ void lexer::scan_numerics()
 
 	// Push the numeric value into the token list.
 	push_token(token_type::NUMERIC, numeric_value);
+}
+
+void lexer::scan_comments()
+{
+	// Save the token's starting index.
+	const std::size_t start_index = current_index;
+
+	// No need to scan for the current char since we know it's a hyphen.
+	current_index++;
+
+	// Scan until the next new line or until the code ends
+	while (code[current_index] != '\n' && current_index != code.length())
+		current_index++;
+
+	// Since we broke out of the loop we know the current index represents the end of the comment.
+	const std::size_t end_index = current_index;
+
+	// Erase everything between the start and end indexes.
+	code.erase(start_index, end_index - start_index);
+
+	// Account for the erased change in the code index by decrementing the length of the removal in the char index.
+	current_index -= end_index - start_index;
 }
 
 std::vector<lexer::token>& lexer::get_tokens()

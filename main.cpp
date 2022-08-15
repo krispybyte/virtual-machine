@@ -111,6 +111,12 @@ int main(int argc, char* argv[])
 		// Turn the tokens into the vm's bytecode.
 		const auto& byte_code = gen::generate_code(lexer_tokens);
 
+		if (lex.get_tokens().empty())
+		{
+			std::printf("[error] Nothing ran! No valid code passed!\n");
+			return EXIT_FAILURE;
+		}
+
 		// Run the virtual machine with the binary's byte code.
 		vm virtual_machine(byte_code);
 

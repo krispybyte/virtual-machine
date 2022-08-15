@@ -9,11 +9,11 @@ Code could most likely be improved in some places, meaning pull requests are wel
 * Large numeric value support
 * Debug mode (more specified in the flags section)
 * Interpreter supports running in both x64 and x86
+* Code comments
 
 ### :bulb: Todo
 * Add floating point value support
 * Add strings, chars and printing
-* Add comments
 
 ### :checkered_flag: Flags
 * **'-b'** - **Build flag**, compiles the content in your inputted file and saves it to a file
@@ -32,17 +32,22 @@ $ virtual-machine code.txt -d
 
 ### :gear: Example code
 ```asm
+$ this is an example of a comment
+
 add vax, 2
 mul vax, 4
 div vax, 2
 
-mov vax, 0
+mov vax, 0      $ this is another comment
 
 push 9000
 push 2000
 
 pop vax
 pop vbx
+
+$ do not trust this comment.
+$ https://www.youtube.com/watch?v=dQw4w9WgXcQ
 ```
 ###### Example output
 ```bash

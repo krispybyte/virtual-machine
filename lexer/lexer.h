@@ -81,6 +81,8 @@ private:
 	void scan_ops_and_regs();
 	// Scans for numeric values.
 	void scan_numerics();
+	// Scan for comments.
+	void scan_comments();
 public:
 	lexer(const std::string& text) 
 		: code(text)

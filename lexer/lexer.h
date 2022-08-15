@@ -8,7 +8,7 @@ typedef unsigned char byte;
 class lexer
 {
 public:
-	static enum token_type : std::int16_t
+	static enum token_type : std::uint16_t
 	{
 		// Opcode tokens.
 		ADD_OP,

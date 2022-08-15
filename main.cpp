@@ -42,8 +42,17 @@ int main(int argc, char* argv[])
 			options.next_arg_is_output_path = true;
 	}
 
+	// Force debug flag if in debug mode.
+#ifdef _DEBUG
+	options.debug_mode = true;
+#endif
+
 	// Open file.
+#ifdef _DEBUG
+	const char* file_name = "D:\\virtual-machine\\output\\code.txt";
+#else
 	const char* file_name = argv[1];
+#endif
 	std::ifstream file_stream(file_name);
 	
 	// Ensure file exists.

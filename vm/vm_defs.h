@@ -1,7 +1,7 @@
 #pragma once
 #include <cstdint>
 
-enum opcodes : std::int8_t
+enum opcodes : std::uint8_t
 {
 	ADD,
 	SUB,
@@ -12,7 +12,7 @@ enum opcodes : std::int8_t
 	POP
 };
 
-enum register_operands : std::int8_t
+enum register_operands : std::uint8_t
 {
 	VAX_OPERAND = 7,
 	VBX_OPERAND
